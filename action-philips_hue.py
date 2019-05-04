@@ -124,7 +124,8 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_on(room.lower())
         else:
-            self.snipshue.light_on_all()
+            ## self.snipshue.light_on_all()
+            print("[HUE] No Room name detected. I should turn on all the led but my master said no.")
         self.terminate_feedback(hermes, intent_message)
     def turn_off(self, hermes, intent_message, rooms):
         if len(rooms) > 0:
