@@ -1,1 +1,5 @@
 test.json
+
+venv_requirements/
+
+\.idea/
