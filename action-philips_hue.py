@@ -127,8 +127,8 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_on(room.lower())
         else:
-            ## self.snipshue.light_on_all()
-            print("[HUE] No Room name detected. I should turn on all the led but my master said no.")
+            # self.snipshue.light_on_all()
+            self.action_instead_of_spamming_all_the_room()
 
         self.terminate_feedback(hermes, intent_message)
 
@@ -137,7 +137,9 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_off(room.lower())
         else:
-            self.snipshue.light_off_all()
+            # self.snipshue.light_off_all()
+            self.action_instead_of_spamming_all_the_room()
+
         self.terminate_feedback(hermes, intent_message)
 
     def set_brightness(self, hermes, intent_message, rooms):
@@ -149,7 +151,9 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_brightness(percent, room.lower())
         else:
-            self.snipshue.light_brightness_all(percent)
+            # self.snipshue.light_brightness_all(percent)
+            self.action_instead_of_spamming_all_the_room()
+
         self.terminate_feedback(hermes, intent_message)
 
     def set_color(self, hermes, intent_message, rooms):
@@ -161,8 +165,9 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_color(color, room.lower())
         else:
+            # self.snipshue.light_color_all(color)
+            self.action_instead_of_spamming_all_the_room()
 
-            self.snipshue.light_color_all(color)
         self.terminate_feedback(hermes, intent_message)
 
     def set_scene(self, hermes, intent_message, rooms):
@@ -174,7 +179,9 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_scene(scene, room.lower())
         else:
-            self.snipshue.light_scene_all(scene)
+            # self.snipshue.light_scene_all(scene)
+            self.action_instead_of_spamming_all_the_room()
+
         self.terminate_feedback(hermes, intent_message)
 
     def shift_up(self, hermes, intent_message, rooms):
@@ -183,7 +190,9 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_up(percent, room.lower())
         else:
-            self.snipshue.light_up_all(percent)
+            # self.snipshue.light_up_all(percent)
+            self.action_instead_of_spamming_all_the_room()
+
         self.terminate_feedback(hermes, intent_message)
 
     def shift_down(self, hermes, intent_message, rooms):
@@ -192,16 +201,23 @@ class Skill_Hue:
             for room in rooms:
                 self.snipshue.light_down(percent, room.lower())
         else:
-            self.snipshue.light_down_all(percent)
+            # self.snipshue.light_down_all(percent)
+            self.action_instead_of_spamming_all_the_room()
+
         self.terminate_feedback(hermes, intent_message)
 
-    ####    section -> feedback reply // future function
+    # section -> feedback reply // future function
     def terminate_feedback(self, hermes, intent_message, mode='default'):
         if mode == 'default':
             hermes.publish_end_session(intent_message.session_id, "")
         else:
-            #### more design
+            # more design
             hermes.publish_end_session(intent_message.session_id, "")
+
+    # Default action to prevent Snips to transfer the order on all the room when no room name is detected
+    def action_instead_of_spamming_all_the_room(self):
+        # self.snipshue.light_on_all()
+        print("[HUE] No Room name detected. I should turn on all the led but my master said no.")
 
 
 if __name__ == "__main__":
