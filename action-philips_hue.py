@@ -233,7 +233,7 @@ class Skill_Hue:
     # Override some room name when rooms contains multiple scenario
     def interpret_custom_room(self, rooms):
         if len(rooms) > 0:
-            copy_rooms = rooms.copy()
+            copy_rooms = list(rooms)
 
             for room in copy_rooms:
                 if room.lower() == "cuisine":
