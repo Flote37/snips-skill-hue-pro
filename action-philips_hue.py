@@ -104,6 +104,9 @@ class Skill_Hue:
         print("[HUE] Received")
         ## all the intents have a house_room slot, extract here
         rooms = self.extract_house_rooms(intent_message)
+
+        rooms = self.interpret_custom_room(rooms)
+
         intent_name = intent_message.intent.intent_name
         if ':' in intent_name:
             intent_name = intent_name.split(":")[1]
@@ -218,6 +221,19 @@ class Skill_Hue:
     def action_instead_of_spamming_all_the_room(self):
         # self.snipshue.light_on_all()
         print("[HUE] No Room name detected. I should turn on all the led but my master said no.")
+
+    # Override some room name when rooms contains multiple scenario
+    def interpret_custom_room(self, rooms):
+        if len(rooms) > 0:
+            copy_rooms = rooms.copy()
+
+            for room in copy_rooms:
+                if room.lower() == "cuisine":
+                    rooms.remove("cuisine")
+                    rooms.append("cuisine gaz")
+                    rooms.append("cuisine piece")
+
+        return rooms
 
 
 if __name__ == "__main__":
