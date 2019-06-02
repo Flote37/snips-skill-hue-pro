@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+import logging
 
 from hermes_python.hermes import Hermes
 from os.path import expanduser
@@ -25,6 +26,8 @@ _id = "snips-skill-hue"
 
 class Skill_Hue:
     def __init__(self):
+        logging.basicConfig(filename='skill_hue.log', level=logging.INFO)
+
         try:
             config = SnipsConfigParser.read_configuration_file(CONFIG_INI)
         except:
@@ -105,7 +108,12 @@ class Skill_Hue:
         ## all the intents have a house_room slot, extract here
         rooms = self.extract_house_rooms(intent_message)
 
+        logging.info("Rooms Extracted")
+        logging.info(str(rooms))
+
         rooms = self.interpret_custom_room(rooms)
+        logging.info("Rooms after custom interpreter")
+        logging.info(str(rooms))
 
         intent_name = intent_message.intent.intent_name
         if ':' in intent_name:
